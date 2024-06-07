@@ -1,17 +1,19 @@
-import { Image, Text } from 'react-native';
+import React from 'react';
+import { Image, Text, StyleSheet } from 'react-native';
 
-export default function Games( props ) {
+const styles = StyleSheet.create({
+	stretch: {
+		width: 300,
+		resizeMode: ('scale', 'center')
+	}});
 
-    return (
-        <>
-            <Text>{props.games.name}</Text>
-            <Image source={props.imageList[props.gamesIndex]}  />
-            <Text>{props.games.year}</Text>
-            {
-                props.games.actors.map( (actor) => {
-                    return <Text key={actor}>{actor}</Text>
-                })
-            }
-        </>
-    );
+export default function Game({name, year, image}) {
+console.log(image)
+	return (
+		<>
+			<Text>{name}</Text>
+			<Text>{year}</Text>
+			<Image source={{uri: image}}/>
+		</>
+	);
 }

@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Zelda Majora's Mask",
+        "image": "../assets/zelda-majora-s-mask-logo.png",
+        "year": 1999
+    },
+    {
+        "name": "Zelda Ocarina Of Time",
+        "image": "./assets/legend-of-zelda-ocarina-of-time-logo-crop.png",
+        "year": 1997
+    },
+    {
+        "name": "Zelda Link Between worlds",
+        "image": "./assets/A_Link_Between_Worlds_Logo.png",
+        "year": 2013
+    }
+]s
