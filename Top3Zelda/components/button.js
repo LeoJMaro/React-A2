@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 3,
-    backgroundColor: "#444",
   },
   button: {
     borderRadius: 10,
@@ -17,21 +16,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    backgroundColor:'#2e2c2c'
   },
   buttonIcon: {
     paddingRight: 8,
   },
   buttonLabel: {
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
+  },
+  buttonLabelSelected: {
+    color: '#CCC',
+
+
+  },
+  buttonSelected: {
+    backgroundColor: '#182c56'
+
   },
 });
 
-export default function Button({ label, onPress }) {
+export default function Button({ label, onPress, selected }) {
   return (
     <View style={styles.buttonContainer}>
-      <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.buttonLabel}>{label}</Text>
+      <Pressable style={[styles.button, selected ? styles.buttonSelected : null ]} onPress={onPress}>
+        <Text style={[styles.buttonLabel, selected ? styles.buttonLabelSelected : null ]}>{label}</Text>
       </Pressable>
     </View>
   );
