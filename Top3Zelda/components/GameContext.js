@@ -1,3 +1,3 @@
-import { createContext } from 'react';
+import {createContext} from 'react';
 
-export const GameContext = createContext(0);
+export const GameContext = createContext(null);

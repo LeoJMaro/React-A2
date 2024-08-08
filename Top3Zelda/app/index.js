@@ -1,36 +1,65 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState} from 'react';
 import { GameContext } from '../components/GameContext';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView} from 'react-native';
 import Game from '../components/games.js';
 import Button from '../components/button.js';
-import Games from '../assets/games.json';
-
+import {selectGames} from './db';
+import { useSQLiteContext } from 'expo-sqlite';
 export default function App() {
-	const { gameIndex, setGameIndex } = useContext(GameContext);
-	const handleGamePress = (index) => {
-		setGameIndex(index);
+	const db = useSQLiteContext();
+	const { games, setGames, selectedGame, setSelectedGame } = useContext(GameContext);
+	useEffect(() => {(
+		async function () {
+				const results = await selectGames(db);
+				if (selectedGame === null) {
+					setSelectedGame(results[0]);
+				}
+				setGames(results);
+			})
+		();
+		},
+		[]
+	);
+	if( games === null) {
+		return (
+			<Text>Loading...</Text>
+		)
 	}
-
-	const selectGame = Games[gameIndex];
-	const buttonList = Games.map((game, i) => {
-		return <Button key={i} label={game.name} selected={i === gameIndex} onPress={() => handleGamePress(i)}/>;
+	const handleGamePress = (index) => {
+		setSelectedGame(games[index]);
+	}
+	const buttonList = games.map((game, i) => {
+		return <Button
+			key={game.id}
+			label={game.name}
+			selected={game.id === selectedGame.id}
+			onPress={() => handleGamePress(i)}
+		/>
 	});
-
-	console.log(gameIndex, buttonList, "test")
 	return (
+
 		<View style={styles.container}>
-			<Game name={selectGame.name} year={selectGame.year} image={selectGame.image} />
+			<Game
+				gameId={selectedGame.id}
+				name={selectedGame.name}
+				year={selectedGame.year}
+				imageURL={selectedGame.imageURL}
+			/>
+			<ScrollView>
 			{buttonList}
+			</ScrollView>
 			<StatusBar style="auto"/>
 		</View>
+
+
 	);
 }
 const styles = StyleSheet.create({
 	container: {
-	flex: 1,
-	backgroundColor: '#fff',
-	alignItems: 'center',
-	justifyContent: 'center',
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 });
